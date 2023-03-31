@@ -64,7 +64,7 @@ public class MenusService {
         return  lista;
     }
 
-    public MenuDto getOrden(Integer orden ,String nombre) {
+    /*public MenuDto getOrden(Integer orden ,String nombre) {
         try {
             String[] params = {nombre};
             Arrays.sort(params, (a, b) -> {
@@ -83,7 +83,7 @@ public class MenusService {
         } catch (Exception ex) {
             return null;
         }
-    }
+    }*/
 
 
     public MenuDto save(MenuDto registro){

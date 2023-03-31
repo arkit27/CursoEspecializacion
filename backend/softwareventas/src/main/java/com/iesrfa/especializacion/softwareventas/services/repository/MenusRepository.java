@@ -49,6 +49,5 @@ public interface MenusRepository extends JpaRepository<MenusEntity, UUID> {
             " WHERE lower(m.nombre) LIKE ?1%  ")
     List<Tuple> finAllMenuPadressearch0(String nombre);
 
-
-    Object findByOrden(String param, String param1);
+    //Object findByOrden(String param, String param1);
 }

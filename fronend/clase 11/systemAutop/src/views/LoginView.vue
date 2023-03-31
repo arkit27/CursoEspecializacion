@@ -116,7 +116,7 @@ body {
   width: 100%;
   height: 100%;
   
-  background-image: url("C:\Proyectoesp\fronend\clase 11\systemAutop\build\images\fond01.jpg");
+  background-image: url("C:\CursoEspecializacion\fronend\clase 11\systemAutop\build\images\fond01.jpg");
   background-position: center;
   background-size: cover;
 }
