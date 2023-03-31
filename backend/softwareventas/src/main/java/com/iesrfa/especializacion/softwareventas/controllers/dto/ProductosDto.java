@@ -17,5 +17,5 @@ public class ProductosDto {
     private UUID id_proveedor;
     private UUID id_procedencia ;
     private double peso;
-    private CategoriasEntity categoria;
+
 }

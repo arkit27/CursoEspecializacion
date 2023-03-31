@@ -35,7 +35,16 @@ public class ProductosEntity {
     @Column(name = "peso", nullable = false)
     private double peso;
     @ManyToOne
-    @JoinColumn(name = "iddetalleventa")
-    private DetalleVentaEntity detalleventa;
+    @JoinColumn(name = "idMarca")
+    private MarcasEntity idMarca;
+    @ManyToOne
+    @JoinColumn(name = "idCategoria")
+    private CategoriasEntity idCategoria;
+    @ManyToOne
+    @JoinColumn(name = "idProveedor")
+    private ProveedoresEntity idProveedor;
+    @ManyToOne
+    @JoinColumn(name = "idProcedencia")
+    private ProcedenciasEntity idProcedencia;
 
 }

@@ -37,19 +37,28 @@
 						<th>Stock</th>
 						<th>Stock Min</th>
 						<th>Marca</th>
-						<th>Proc.</th>
-						<th>Categ.</th>
+						<th>Categ..</th>
 						<th>Provee.</th>
 						<th>Proced..</th>
 						<th>Acciones</th>
 					  </tr>
 					</thead>
 					<tbody>
-					  <tr v-for="itemMarca in listamarcas">
-						<td>{{itemMarca.marca}}</td>
+					  <tr v-for="itemProducto in listaproductos">
+						<td>{{itemProducto.nombre}}</td>
+						<td>{{itemProducto.precio_unitario}}</td>
+						<td>{{itemProducto.precio_compra}}</td>
+						<td>{{itemProducto.precio_venta}}</td>
+						<td>{{itemProducto.descripcion}}</td>
+						<td>{{itemProducto.stock}}</td>
+						<td>{{itemProducto.stockmin}}</td>
+						<td>{{itemProducto.marca}}</td>
+						<td>{{itemProducto.categoria}}</td>
+						<td>{{itemProducto.proveedor}}</td>
+						<td>{{itemProducto.procedencia}}</td>
 						<td class="text-center">
-						  <i class="fa fa-pencil" v-on:click="editarMarca(itemMarca)" style="cursor:pointer; padding-right: 1ex; color: burlywood;"></i>
-						  <i class="fa fa-trash" v-on:click="eliminarMarca(itemMarca.id_marca)"  style="cursor:pointer; padding-right: 1ex; color:red"></i>
+						  <i class="fa fa-pencil" v-on:click="editarProducto(itemProducto)" style="cursor:pointer; padding-right: 1ex; color: burlywood;"></i>
+						  <i class="fa fa-trash" v-on:click="eliminarProducto(itemProducto.id_producto)"  style="cursor:pointer; padding-right: 1ex; color:red"></i>
 						</td>
 					  </tr>                       
 					</tbody>
@@ -88,11 +97,11 @@
 										<div class="form-group row ">
 											<label class="control-label col-md-3 col-sm-3 ">Nombre el producto</label>
 											<div class="col-md-9 col-sm-9 ">
-												<input id="nombre" v-model="nombre" class="form-control" type="text" name="nombre" placeholder="Nombre del Prodcuto">
+												<input id="nombre" v-model="nombre" class="form-control" type="text" name="nombre" placeholder="Nombre del Producto">
 											</div>
 										</div>
 										<div class="form-group row">
-											<label class="control-label col-md-3 col-sm-3 ">Precio X Unidad</label>
+											<label class="control-label col-md-3 col-sm-3 ">Precio por Unidad</label>
 											<div class="col-md-9 col-sm-9 ">
 												<input id="precio_unitario" v-model="precio_unitario" class="form-control" type="text" name="precio_unitario" placeholder="Precio Unitario">
 											</div>
@@ -109,9 +118,8 @@
 												<input id="precio_venta" v-model="precio_venta" class="form-control" type="text" name="precio_venta" placeholder="Precio Venta">
 											</div>
 										</div>
-									
 										<div class="form-group row">
-											<label class="control-label col-md-3 col-sm-3 ">Descripcion<span class="required">*</span>
+											<label class="control-label col-md-3 col-sm-3 ">Descripcion
 											</label>
 											<div class="col-md-9 col-sm-9 ">
 												<textarea class="form-control" rows="2" placeholder="Descripcion del producto...." id="descripcion" name="descripcion" v-model="descripcion"></textarea>
@@ -121,76 +129,60 @@
 										<div class="form-group row">
 											<label class="control-label col-md-3 col-sm-3 ">Stock</label>
 											<div class="col-md-9 col-sm-9 ">
-												<input type="number" name="stock" id="stock" class="form-control col-md-2" />
+												<input type="number" name="stock" id="stock"  v-model="stock" class="form-control col-md-2" />
 											</div>
                                             
 										</div>
                                         <div class="form-group row">
 											<label class="control-label col-md-3 col-sm-3 ">Stock Minimo</label>
 											<div class="col-md-9 col-sm-9 ">
-												<input type="number" name="stockmin" id="stockmin" class="form-control col-md-2" />
+												<input type="number" name="stockmin" id="stockmin"  v-model="stockmin" class="form-control col-md-2" />
 											</div>
 										</div>
 										<div class="form-group row">
+											<label class="control-label col-md-3 col-sm-3 ">Procedencias</label>
+											<div class="col-md-9 col-sm-9 ">
+												<select v-model="menuPadre" class="select2_single form-control" tabindex="-1">
+												  <option>Sin Procedencia</option>
+												  <option v-for="itemProcedencia in listaprocedencias " :value="itemProcedencia.id_procedencia">{{
+													itemProcedencia.procedencia }}</option>
+												</select>
+											  </div>
+										</div>
+
+										<div class="form-group row">
+											<label class="control-label col-md-3 col-sm-3 ">categoria</label>
+											<div class="col-md-9 col-sm-9 ">
+												<select v-model="menuPadre" class="select2_single form-control" tabindex="-1">
+												  <option>Sin Procedencia</option>
+												  <option v-for="itemCategoria in listacategorias " :value="itemCategoria.id">{{
+													itemCategoria.categoria }}</option>
+												</select>
+											  </div>
+										</div>
+										
+                                        <div class="form-group row">
 											<label class="control-label col-md-3 col-sm-3 ">Marca</label>
 											<div class="col-md-9 col-sm-9 ">
-												<select class="form-control">
-													<option>Eliga</option>
-													<option>Boleta</option>
-													<option>Factura</option>
-													
+												<select v-model="menuPadre" class="select2_single form-control" tabindex="-1">
+												  <option>Sin Marca</option>
+												  <option v-for="itemMarca in listamarcas " :value="itemMarca.id">{{
+													itemMarca.marca }}</option>
 												</select>
-											</div>
+											  </div>
 										</div>
-
-                                        <div class="form-group row">
-											<label class="control-label col-md-3 col-sm-3 ">Procedencia</label>
-											<div class="col-md-9 col-sm-9 ">
-												<select class="form-control">
-													<option>Eliga</option>
-													<option>Boleta</option>
-													<option>Factura</option>
-													
-												</select>
-											</div>
-										</div>
-
-                                        <div class="form-group row">
-											<label class="control-label col-md-3 col-sm-3 ">Categoria</label>
-											<div class="col-md-9 col-sm-9 ">
-												<select class="form-control">
-													<option>Eliga</option>
-													<option>Boleta</option>
-													<option>Factura</option>
-													
-												</select>
-											</div>
-										</div>
-
-                                        <div class="form-group row">
-											<label class="control-label col-md-3 col-sm-3 ">Proveedor</label>
-											<div class="col-md-9 col-sm-9 ">
-												<select class="form-control">
-													<option>Eliga</option>
-													<option>Boleta</option>
-													<option>Factura</option>
-													
-												</select>
-											</div>
-										</div>
-                                        <div class="form-group row">
-											<label class="control-label col-md-3 col-sm-3 ">Procedencia</label>
-											<div class="col-md-9 col-sm-9 ">
-												<select class="form-control">
-													<option>Eliga</option>
-													<option>Boleta</option>
-													<option>Factura</option>
-													
-												</select>
-											</div>
-										</div>
-                                        
 										
+										<div class="form-group row">
+											<label class="control-label col-md-3 col-sm-3">Proveedor</label>
+											<div class="col-md-9 col-sm-9 ">
+											  <select v-model="menuPadre" class="select2_single form-control" tabindex="-1">
+												<option>Sin Proveedor</option>
+												<option v-for="itemProveedor in listaproveedores " :value="itemProveedor.id">{{
+												  itemProveedor.nombres }}</option>
+											  </select>
+											</div>
+										  </div>
+                                      
 										<div class="ln_solid"></div>
 										<div class="form-group">
 											<div class="col-md-9 col-sm-9  offset-md-3">
@@ -212,8 +204,165 @@
 	
 	
   </template>
-
-
+  <script>
+  export default {
+	data() {
+	  return {
+		id_producto: null,
+		nombre: "",
+		precio_unitario: "",
+		precio_venta: "",
+		precio_compra: "",
+		descripcion: "",
+		stock: "",
+		stockmin: "",
+		Marca: "",
+		Categoria: "",
+		Procedencia: "",
+		Proveedor: "",
+		listaproductos: [],
+		searchnombre: "",
+		
+	  };
+	},
+	methods: {
+		async iniciarCarga() {
+			try {
+			const response = await fetch("http://localhost:8081/v1/productos/");
+			this.listaproductos= this.listMenuItems = await response.json();   
+			} catch (error) {
+			//console.log(error);
+			}
+		},
+	  async iniciarMarca() {
+		try {
+		  var urltmp = "http://localhost:8081/v1/marcas/";
+		  const response = await fetch(urltmp);
+		  this.listamarcas = this.listMarcaItems = await response.json();
+		  //console.log("prueba");
+		} catch (error) {
+		  //console.log("error");
+		}
+	  },
+	  async iniciarCategoria() {
+		try {
+		  var urltmp = "http://localhost:8081/v1/categorias/";
+		  const response = await fetch(urltmp);
+		  this.listacategorias = this.listCategoriaItems = await response.json();
+		} catch (error) {
+		  //console.log(error);
+		}
+	  },
+	  async iniciarProveedor() {
+		try {
+		  var urltmp = "http://localhost:8081/v1/proveedores/";
+		  const response = await fetch(urltmp);
+		  this.listaproveedores = this.listProveedorItems = await response.json();
+		} catch (error) {
+		  //console.log(error);
+		}
+	  },
+	  async iniciarProcedencia() {
+		try {
+		  var urltmp = "http://localhost:8081/v1/procedencias/";
+		  const response = await fetch(urltmp);
+		  this.listaprocedencias = this.listProcedenciasItems = await response.json();
+		} catch (error) {
+		  //console.log(error);
+		}
+	  },
+	  guardardatos() {
+		var data = {
+		  codigoProducto: this.codigoProducto,
+		  nombreProducto: this.nombreProducto,
+		  fechaVencimiento: this.fechaVencimiento,
+		  stock: this.stock,
+		  precioCompra: this.precioCompra,
+		  precioVenta: this.precioVenta,
+		  nombreMarca: this.nombreMarca,
+		  nombreCategoria: this.nombreCategoria,
+		  nombreProveedor: this.nombreProveedor,
+		  nombrePresentacion: this.nombrePresentacion,
+		};
+		var metodo = "POST";
+  
+		console.log(this.id)
+  
+		if (this.id != null || this.id != "") {//guardar datos			
+		  data.id = this.id
+		  metodo = "PUT";
+		}
+  
+		fetch("http://localhost:8081/v1/productos/", {
+		  method: metodo, // or 'PUT'
+		  headers: { "Content-Type": "application/json", },
+		  body: JSON.stringify(data),
+		}).then((response) => response.json())
+		  .then((data) => {
+			this.iniciarCarga();
+		  })
+		  .catch((error) => {
+			console.error("Error:", error);
+			return;
+		  });
+	  },
+	  editarProducto(datos) {
+		this.id = datos.id;
+		this.codigoProducto = datos.codigoProducto;
+		this.nombreProducto = datos.nombreProducto;
+		this.fechaVencimiento = datos.fechaVencimiento;
+		this.stock = datos.stock;
+		this.precioCompra = datos.precioCompra;
+		this.precioVenta = datos.precioVenta;
+		this.nombreMarca = datos.nombreMarca;
+		this.nombreCategoria = datos.nombreCategoria;
+		this.nombreProveedor = datos.nombreProveedor;
+		this.nombrePresentacion = datos.nombrePresentacion;
+	  },
+	  nuevoregistro() {
+		this.mostrarformulario = true;
+		this.id = null;
+	  },
+	  cancelar() {
+		this.mostrarformulario = false;
+	  },
+	  eliminarProducto(idtmp) {
+		Swal.fire({
+		  title: 'Esta Seguro de Eliminar el registro Seleccionado?',
+		  showDenyButton: true,
+		  showCancelButton: true,
+		  confirmButtonText: 'Si, Borrar',
+		  denyButtonText: `No, Cancelar`,
+		}).then((result) => {
+		  /* Read more about isConfirmed, isDenied below */
+		  if (result.isConfirmed) {
+			fetch("http://localhost:8080/v1/producto/" + idtmp, {
+			  method: 'DELETE', // or 'PUT'
+			  headers: { "Content-Type": "application/json", },
+			}).then((response) => response.text())
+			  .then((data) => {
+				Swal.fire(data, '', 'success')
+				this.iniciarCarga();
+			  })
+			  .catch((error) => {
+				Swal.fire('Error: ' + error, '', 'error')
+				return;
+			  });
+		  } else if (result.isDenied) {
+			Swal.fire('Operación Cancelada', '', 'info')
+		  }
+		})
+	  }
+	},
+	created() {
+	  this.iniciarCarga();
+	  this.iniciarMarca();
+	  this.iniciarCategoria();
+	  this.iniciarProveedor();
+	  this.iniciarProcedencia();
+	},
+  }
+  </script>
 
 <style>
 /* Estilo para el formulario */
@@ -312,3 +461,4 @@
 	color:#fff }
 
 </style>
+

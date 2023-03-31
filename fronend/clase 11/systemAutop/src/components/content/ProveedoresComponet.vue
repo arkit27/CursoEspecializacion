@@ -121,13 +121,13 @@
 export default{
 	data() {
       return {
-		id_proveedor:null,
+		    id_proveedor:null,
         dni:"",
-		nombres:"",
+		    nombres:"",
         email:"",
         telefono:"",
         direccion:"",
-		listaproveedor:[]
+		    listaproveedor:[]
       };
     },
 	methods: {
