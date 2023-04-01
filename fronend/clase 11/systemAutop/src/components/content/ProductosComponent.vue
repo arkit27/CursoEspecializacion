@@ -46,10 +46,10 @@
 						<td>{{itemProducto.descripcion}}</td>
 						<td>{{itemProducto.stock}}</td>
 						<td>{{itemProducto.stockmin}}</td>
-						<td>{{itemProducto.marca}}</td>
-						<td>{{itemProducto.categoria}}</td>
-						<td>{{itemProducto.proveedor}}</td>
-						<td>{{itemProducto.procedencia}}</td>
+						<td>{{itemProducto.Nombremarca}}</td>
+						<td>{{itemProducto.Nombrecategoria}}</td>
+						<td>{{itemProducto.Nombreproveedor}}</td>
+						<td>{{itemProducto.Nombreprocedencia}}</td>
 						<td class="text-center">
 						  <i class="fa fa-pencil" v-on:click="editarProducto(itemProducto)" style="cursor:pointer; padding-right: 1ex; color: burlywood;"></i>
 						  <i class="fa fa-trash" v-on:click="eliminarProducto(itemProducto.id_producto)"  style="cursor:pointer; padding-right: 1ex; color:red"></i>
@@ -80,10 +80,11 @@
 								</div>
 								<div class="x_content">
 									
-									<form class="form-horizontal form-label-left">
+									<form id="frmProducto" v-on:submit="guardardatos()" data-parsley-validate class="form-horizontal form-label-left">
 
 										<div class="form-group row ">
 											<label class="control-label col-md-3 col-sm-3 ">Nombre el producto</label>
+											<input type="hidden" id="id_producto" name="id" v-model="id_producto" />
 											<div class="col-md-9 col-sm-9 ">
 												<input id="nombre" v-model="nombre" class="form-control" type="text" name="nombre" placeholder="Nombre del Producto">
 											</div>
@@ -130,8 +131,8 @@
 										<div class="form-group row">
 											<label class="control-label col-md-3 col-sm-3 ">Procedencias</label>
 											<div class="col-md-9 col-sm-9 ">
-												<select v-model="menuPadre" class="select2_single form-control" tabindex="-1">
-												  <option>Sin Procedencia</option>
+												<select v-model="selecProcedencia" class="select2_single form-control" tabindex="-1">
+												  <option default>Sin Procedencia</option>
 												  <option v-for="itemProcedencia in listaprocedencias " :value="itemProcedencia.id_procedencia">{{
 													itemProcedencia.procedencia }}</option>
 												</select>
@@ -141,9 +142,9 @@
 										<div class="form-group row">
 											<label class="control-label col-md-3 col-sm-3 ">categoria</label>
 											<div class="col-md-9 col-sm-9 ">
-												<select v-model="menuPadre" class="select2_single form-control" tabindex="-1">
-												  <option>Sin Procedencia</option>
-												  <option v-for="itemCategoria in listacategorias " :value="itemCategoria.id">{{
+												<select v-model="selecCategoria" class="select2_single form-control" tabindex="-1">
+												  <option default>Sin Procedencia</option>
+												  <option v-for="itemCategoria in listacategorias " :value="itemCategoria.id_categoria">{{
 													itemCategoria.categoria }}</option>
 												</select>
 											  </div>
@@ -152,9 +153,9 @@
                                         <div class="form-group row">
 											<label class="control-label col-md-3 col-sm-3 ">Marca</label>
 											<div class="col-md-9 col-sm-9 ">
-												<select v-model="menuPadre" class="select2_single form-control" tabindex="-1">
-												  <option>Sin Marca</option>
-												  <option v-for="itemMarca in listamarcas " :value="itemMarca.id">{{
+												<select v-model="selecMarca" class="select2_single form-control" tabindex="-1">
+												  <option default>Sin Marca</option>
+												  <option v-for="itemMarca in listamarcas " :value="itemMarca.id_marca">{{
 													itemMarca.marca }}</option>
 												</select>
 											  </div>
@@ -163,9 +164,9 @@
 										<div class="form-group row">
 											<label class="control-label col-md-3 col-sm-3">Proveedor</label>
 											<div class="col-md-9 col-sm-9 ">
-											  <select v-model="menuPadre" class="select2_single form-control" tabindex="-1">
-												<option>Sin Proveedor</option>
-												<option v-for="itemProveedor in listaproveedores " :value="itemProveedor.id">{{
+											  <select v-model="selectProveedor" class="select2_single form-control" tabindex="-1">
+												<option default>Sin Proveedor</option>
+												<option v-for="itemProveedor in listaproveedores " :value="itemProveedor.id_proveedor">{{
 												  itemProveedor.nombres }}</option>
 											  </select>
 											</div>
@@ -204,17 +205,17 @@
 		descripcion: "",
 		stock: "",
 		stockmin: "",
-		Marca: "",
-		Categoria: "",
-		Procedencia: "",
-		Proveedor: "",
+		selecMarca: "",
+		selecCategoria: "",
+		selecProcedencia: "",
+		selecProveedor: "",
 		listaproductos: [],
-		searchnombre: "",
+	
 		
 	  };
 	},
 	methods: {
-		async iniciarCarga() {
+	  async iniciarCarga() {
 			try {
 			const response = await fetch("http://localhost:8081/v1/productos/");
 			this.listaproductos= this.listMenuItems = await response.json();   
@@ -226,7 +227,7 @@
 		try {
 		  var urltmp = "http://localhost:8081/v1/marcas/";
 		  const response = await fetch(urltmp);
-		  this.listamarcas = this.listMarcaItems = await response.json();
+		  this.listamarcas = this.listamarcas = await response.json();
 		  //console.log("prueba");
 		} catch (error) {
 		  //console.log("error");
@@ -236,7 +237,7 @@
 		try {
 		  var urltmp = "http://localhost:8081/v1/categorias/";
 		  const response = await fetch(urltmp);
-		  this.listacategorias = this.listCategoriaItems = await response.json();
+		  this.listacategorias = this.listacategorias = await response.json();
 		} catch (error) {
 		  //console.log(error);
 		}
@@ -245,7 +246,7 @@
 		try {
 		  var urltmp = "http://localhost:8081/v1/proveedores/";
 		  const response = await fetch(urltmp);
-		  this.listaproveedores = this.listProveedorItems = await response.json();
+		  this.listaproveedores = this.listaproveedores = await response.json();
 		} catch (error) {
 		  //console.log(error);
 		}
@@ -254,30 +255,32 @@
 		try {
 		  var urltmp = "http://localhost:8081/v1/procedencias/";
 		  const response = await fetch(urltmp);
-		  this.listaprocedencias = this.listProcedenciasItems = await response.json();
+		  this.listaprocedencias = this.listaprocedencias = await response.json();
 		} catch (error) {
 		  //console.log(error);
 		}
 	  },
 	  guardardatos() {
 		var data = {
-		  codigoProducto: this.codigoProducto,
-		  nombreProducto: this.nombreProducto,
-		  fechaVencimiento: this.fechaVencimiento,
+		  nombre: this.nombre,
+		  descripcion: this.descripcion,
+		  precio_unitario: this.precio_unitario,
+		  precio_compra: this.precio_compra,
+		  precio_venta: this.precio_venta,
 		  stock: this.stock,
-		  precioCompra: this.precioCompra,
-		  precioVenta: this.precioVenta,
-		  nombreMarca: this.nombreMarca,
-		  nombreCategoria: this.nombreCategoria,
-		  nombreProveedor: this.nombreProveedor,
-		  nombrePresentacion: this.nombrePresentacion,
+		  stockmin: this.stockmin,
+		  peso: this.peso,
+		  id_marca: this.selecMarca,
+		  id_categoria: this.selecCategoria,
+		  id_proveedor: this.selecProveedor,
+		  id_procedencia: this.selecProcedencia,
 		};
 		var metodo = "POST";
   
-		console.log(this.id)
+		console.log(this.id_producto)
   
-		if (this.id != null || this.id != "") {//guardar datos			
-		  data.id = this.id
+		if (this.id_producto != null || this.id_producto != "") {//guardar datos			
+		  data.id_producto = this.id_producto
 		  metodo = "PUT";
 		}
   
@@ -295,11 +298,10 @@
 		  });
 	  },
 	  editarProducto(datos) {
-		this.id = datos.id;
-		this.codigoProducto = datos.codigoProducto;
-		this.nombreProducto = datos.nombreProducto;
-		this.fechaVencimiento = datos.fechaVencimiento;
+		this.id_producto = datos.id_producto;
+		this.nombre = datos.nombre;
 		this.stock = datos.stock;
+		this.stockmin = datos.stockmin;
 		this.precioCompra = datos.precioCompra;
 		this.precioVenta = datos.precioVenta;
 		this.nombreMarca = datos.nombreMarca;
@@ -309,7 +311,7 @@
 	  },
 	  nuevoregistro() {
 		this.mostrarformulario = true;
-		this.id = null;
+		this.id_producto = null;
 	  },
 	  cancelar() {
 		this.mostrarformulario = false;
@@ -324,7 +326,7 @@
 		}).then((result) => {
 		  /* Read more about isConfirmed, isDenied below */
 		  if (result.isConfirmed) {
-			fetch("http://localhost:8080/v1/producto/" + idtmp, {
+			fetch("http://localhost:8081/v1/productos/" + idtmp, {
 			  method: 'DELETE', // or 'PUT'
 			  headers: { "Content-Type": "application/json", },
 			}).then((response) => response.text())

@@ -12,10 +12,15 @@ public class ProductosDto {
     private double precio_venta;
     private int stock;
     private int stockmin;
+    private double peso;
+    ////
     private UUID id_marca ;
     private UUID id_categoria;
     private UUID id_proveedor;
     private UUID id_procedencia ;
-    private double peso;
+    private String Nombremarca;
+    private String Nombrecategoria;
+    private String Nombreproveedor;
+    private String Nombreprocedencia;
 
 }

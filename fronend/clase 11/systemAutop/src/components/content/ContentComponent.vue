@@ -36,7 +36,7 @@
                 <div class="row invoice-info">
                   <div class="col-sm-4 invoice-col1 with-bar-right"> 
                     <address>
-                      <br>Total de Menus: {{ numMenus }}
+                      <br>Total de Menus: {{ totalMenus  }}
                     </address>
                   </div>
                   <!-- /.col -->
@@ -114,6 +114,10 @@ export default {
     }, 1000);
   }
 };
+
+  
+
+
 
 </script>
 //reloj-digital
@@ -197,5 +201,7 @@ h3.small {
 
 
 </style>
+
+
 
 
