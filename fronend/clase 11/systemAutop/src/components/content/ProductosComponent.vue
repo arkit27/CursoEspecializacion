@@ -132,7 +132,7 @@
 											<label class="control-label col-md-3 col-sm-3 ">Procedencias</label>
 											<div class="col-md-9 col-sm-9 ">
 												<select v-model="selecProcedencia" class="select2_single form-control" tabindex="-1">
-												  <option default>Sin Procedencia</option>
+												  <option  selected>Sin Procedencia</option>
 												  <option v-for="itemProcedencia in listaprocedencias " :value="itemProcedencia.id_procedencia">{{
 													itemProcedencia.procedencia }}</option>
 												</select>
@@ -143,7 +143,7 @@
 											<label class="control-label col-md-3 col-sm-3 ">categoria</label>
 											<div class="col-md-9 col-sm-9 ">
 												<select v-model="selecCategoria" class="select2_single form-control" tabindex="-1">
-												  <option default>Sin Procedencia</option>
+												  <option selected>Sin Categoria</option>
 												  <option v-for="itemCategoria in listacategorias " :value="itemCategoria.id_categoria">{{
 													itemCategoria.categoria }}</option>
 												</select>
@@ -154,7 +154,7 @@
 											<label class="control-label col-md-3 col-sm-3 ">Marca</label>
 											<div class="col-md-9 col-sm-9 ">
 												<select v-model="selecMarca" class="select2_single form-control" tabindex="-1">
-												  <option default>Sin Marca</option>
+												  <option selected>Sin Marca</option>
 												  <option v-for="itemMarca in listamarcas " :value="itemMarca.id_marca">{{
 													itemMarca.marca }}</option>
 												</select>
@@ -165,7 +165,7 @@
 											<label class="control-label col-md-3 col-sm-3">Proveedor</label>
 											<div class="col-md-9 col-sm-9 ">
 											  <select v-model="selectProveedor" class="select2_single form-control" tabindex="-1">
-												<option default>Sin Proveedor</option>
+												<option selected>Sin Proveedor</option>
 												<option v-for="itemProveedor in listaproveedores " :value="itemProveedor.id_proveedor">{{
 												  itemProveedor.nombres }}</option>
 											  </select>
