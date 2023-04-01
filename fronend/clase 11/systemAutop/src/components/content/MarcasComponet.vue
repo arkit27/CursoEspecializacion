@@ -61,7 +61,7 @@
 						<form id="frmMarca" v-on:submit="guardardatos()"  data-parsley-validate class="form-horizontal form-label-left">
 							<input type="hidden" id="id_marca" name="id_marca" v-model="id_marca"/>
 							<div class="item form-group">
-								<label class="col-form-label col-md-3 col-sm-3 label-align" for="nombre">Nombre de la Marca<span class="required">*</span>
+								<label class="col-form-label col-md-3 col-sm-3 label-align" for="nombre">Nombre de la Marca<span class="required"></span>
 								</label>
 								<div class="col-md-5 col-sm-4 ">
 									<input type="text" id="marca" name="marca" v-model="marca" required class="form-control ">

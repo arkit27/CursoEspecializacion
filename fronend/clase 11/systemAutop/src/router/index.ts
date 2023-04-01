@@ -1,11 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import IndexView from '../views/IndexView.vue'
-import PersonasView from '../views/PersonasView.vue'
 import ProductosView from '../views/ProductosView.vue'
 import UsuariosView from '../views/UsuariosView.vue'
 import MenusView from '../views/MenusView.vue'
 import CategoriasView from '../views/CategoriasView.vue'
-import EmpleadosView from '../views/EmpleadosView.vue'
 import ClientesView from '../views/ClientesView.vue'
 import ProcedenciasView from '../views/ProcedenciasView.vue'
 import VentasView from '../views/VentasView.vue'
@@ -20,11 +18,7 @@ const router = createRouter({
       name: 'home',
       component: IndexView
     },
-    {
-      path: '/personas',
-      name: 'personas',
-      component: PersonasView
-    },
+    
     {
       path: '/productos',
       name: 'productos',
@@ -45,11 +39,7 @@ const router = createRouter({
       name: 'categorias',
       component: CategoriasView
     },
-    {
-      path: '/empleados',
-      name: 'empleados',
-      component: EmpleadosView
-    },
+   
     {
       path: '/clientes',
       name: 'clientes',
