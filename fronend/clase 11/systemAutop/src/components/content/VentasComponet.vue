@@ -35,7 +35,7 @@
 					</thead>
 					<tbody>
 					  <tr v-for="itemVenta in listaventas">
-						<td>{{itemProducto.nombre}}</td>
+						<td>{{item.nombre}}</td>
 						<td>{{itemVenta.cantidad}}</td>
 						<td>{{itemProducto.descripcion}}</td>
 						<td>{{itemVenta.id_clienteNombres}}</td>

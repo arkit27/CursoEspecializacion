@@ -10,5 +10,7 @@ public class DetalleVentaDto {
     private int cantidad;
     private double precio_unitario;
     private UUID id_usuario ;
+    private String id_usuarioNombre ;
+    private String id_productoNombre ;
 }
 

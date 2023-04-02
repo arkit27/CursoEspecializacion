@@ -23,4 +23,12 @@ public class DetalleVentaEntity {
     @ManyToOne
     @JoinColumn(name = "idUsuario")
     private UsuariosEntity usuarios;
+
+    @ManyToOne
+    @JoinColumn(name = "idProducto")
+    private UsuariosEntity id_producto;
+
+    @ManyToOne
+    @JoinColumn(name = "idVenta")
+    private UsuariosEntity id_venta;
 }
