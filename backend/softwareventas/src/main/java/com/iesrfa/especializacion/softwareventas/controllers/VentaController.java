@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.UUID;
-@RestController
+@RestController()
 @RequestMapping("/v1/ventas")
 @CrossOrigin(origins = "*")
 public class VentaController {

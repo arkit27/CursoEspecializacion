@@ -64,26 +64,21 @@ public class MenusService {
         return  lista;
     }
 
-    /*public MenuDto getOrden(Integer orden ,String nombre) {
-        try {
-            String[] params = {nombre};
-            Arrays.sort(params, (a, b) -> {
-                if (orden.equals("asc")) {
-                    return a.compareTo(b);
-                } else if (orden.equals("desc")) {
-                    return b.compareTo(a);
-                } else {
-                    return 0;
-                }
-            });
-            return this.modelMapper.map(
-                    repository.findByOrden(params[0], params[1]),
-                    MenuDto.class
-            );
-        } catch (Exception ex) {
-            return null;
+    private List<MenuDto> listaBusca(List<Tuple> datosb){
+        List<MenuDto> listaB = new ArrayList<>();
+        for (Tuple eles : datosb) {
+            MenuDto dtotmps = new MenuDto();
+            dtotmps.setId(eles.get("id") == null ? null : (UUID) eles.get("ID"));
+            dtotmps.setNombre(eles.get("nombre") == null ? null : (String) eles.get("nombre"));
+            dtotmps.setIcono(eles.get("icono") == null ? null : (String) eles.get("icono"));
+            dtotmps.setOrden(eles.get("orden") == null ? null : (Integer) eles.get("orden"));
+            dtotmps.setUrl(eles.get("url") == null ? null : (String) eles.get("url"));
+            dtotmps.setMenuPadre(eles.get("menuPadre") == null ? null : (UUID) eles.get("menuPadre"));
+            dtotmps.setNombrePadre(eles.get("nombreMenuPadre") == null ? null : (String) eles.get("nombreMenuPadre"));
+            listaB.add(dtotmps);
         }
-    }*/
+        return listaB;
+    }
 
 
     public MenuDto save(MenuDto registro){

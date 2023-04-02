@@ -16,7 +16,7 @@ public class VentasEntity {
     @Column(name = "id_venta", nullable = false)
     private UUID id_venta;
     @Column(name = "fecha_venta", nullable = false)
-    private Date fecha_venta;
+    private String fecha_venta;
     @ManyToOne
     @JoinColumn(name = "id_detalle_venta")
     private DetalleVentaEntity id_detalle_venta;

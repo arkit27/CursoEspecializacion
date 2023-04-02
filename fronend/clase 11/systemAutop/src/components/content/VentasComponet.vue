@@ -38,8 +38,8 @@
 						<td>{{itemProducto.nombre}}</td>
 						<td>{{itemVenta.cantidad}}</td>
 						<td>{{itemProducto.descripcion}}</td>
-						<td>{{itemCliente.nombres}}</td>
-						<td>{{item.facturacion}}</td>
+						<td>{{itemVenta.id_clienteNombres}}</td>
+						<td>{{itemVenta.id_factuFacturacion}}</td>
 						<td>{{itemVenta.fecha_venta}}</td>
 						
 						
