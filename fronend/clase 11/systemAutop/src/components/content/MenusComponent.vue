@@ -46,7 +46,7 @@
                           <td>{{itemMenu.nombre}}</td>
                           <td><i v-bind:class="'fa ' + itemMenu.icono" ></i> {{ itemMenu.icono }}</td>
                           <td>{{ itemMenu.url }}</td>
-                          <td>{{itemMenu.menuPadre}}</td>
+                          <td>{{itemMenu.nombrePadre}}</td>
                           <td>{{itemMenu.orden}}</td>
 						  <td class="text-center">
 							<i class="fa fa-pencil" v-on:click="editarMenu(itemMenu)" style="cursor:pointer; padding-right: 1ex; color: burlywood;"></i>
@@ -110,7 +110,7 @@
 						
 							
 							<div class="form-group row">
-								<label class="control-label col-md-3 col-sm-3 label-right">Menu Padre</label>
+								<label class="col-form-label col-md-3 col-sm-3 label-align">Menu Padre</label>
 								<div class="col-md-6 col-sm-6 ">
 									<select v-model="menuPadre" class="select2_single form-control" tabindex="-1">
 										<option>Sin Menu Padre</option>										

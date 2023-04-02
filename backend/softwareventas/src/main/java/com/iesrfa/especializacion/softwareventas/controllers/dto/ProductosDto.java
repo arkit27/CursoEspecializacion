@@ -18,9 +18,9 @@ public class ProductosDto {
     private UUID id_categoria;
     private UUID id_proveedor;
     private UUID id_procedencia ;
-    private String Nombremarca;
-    private String Nombrecategoria;
-    private String Nombreproveedor;
-    private String Nombreprocedencia;
+    private String id_marcaMarca;
+    private String id_categoriaCategoria;
+    private String id_proveedorNombres;
+    private String id_procedenciaProcedencia;
 
 }

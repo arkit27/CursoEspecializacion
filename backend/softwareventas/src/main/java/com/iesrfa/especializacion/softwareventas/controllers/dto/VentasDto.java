@@ -10,4 +10,5 @@ public class VentasDto {
     private UUID id_cliente;
     private UUID id_factu;
 
+
 }

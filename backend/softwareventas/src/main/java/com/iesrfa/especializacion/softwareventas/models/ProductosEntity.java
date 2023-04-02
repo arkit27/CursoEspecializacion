@@ -29,9 +29,6 @@ public class ProductosEntity {
     private int stock;
     @Column(name = "stockmin", nullable = false)
     private int stockmin;
-
-    @Column(name = "procedencia", nullable = false)
-    private String procedencia ;
     @Column(name = "peso", nullable = false)
     private double peso;
     @ManyToOne
