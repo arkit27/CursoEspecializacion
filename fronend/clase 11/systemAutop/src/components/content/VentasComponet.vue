@@ -28,20 +28,21 @@
 						<th>Descripcion</th>
 						<th>Cliente</th>
 						<th>Tipo de Comprobante</th>
+						<th>Fecha</th>
+						<th>Acciones</th>
 						
 					  </tr>
 					</thead>
 					<tbody>
 					  <tr v-for="itemVenta in listaventas">
 						<td>{{itemProducto.nombre}}</td>
-						<td>{{itemVenta.descripcion}}</td>
-						<td>{{itemVenta.nombres}}</td>
-						<td>{{itemVenta.descripcion}}</td>
-						<td>{{itemVenta.stock}}</td>
-						<td>{{itemVenta.stockmin}}</td>
-						<td>{{itemVenta.marca}}</td>
-						<td>{{itemVenta.categoria}}</td>
-						<td>{{itemVenta.proveedor}}</td>
+						<td>{{itemVenta.cantidad}}</td>
+						<td>{{itemProducto.descripcion}}</td>
+						<td>{{itemCliente.nombres}}</td>
+						<td>{{item.facturacion}}</td>
+						<td>{{itemVenta.fecha_venta}}</td>
+						
+						
 						
 						<td class="text-center">
 						  <i class="fa fa-pencil" v-on:click="editarVenta(itemVenta)" style="cursor:pointer; padding-right: 1ex; color: burlywood;"></i>
@@ -74,6 +75,10 @@
 									<br />
 									<form class="form-horizontal form-label-left">
 
+										<input type="hidden" id="id_venta" name="id_venta" v-model="id_venta" />
+										<input type="hidden" id="id_detalle_venta" name="id_detalle_venta" v-model="id_detalle_venta" />
+
+
 										<div class="form-group row ">
 											<label class="control-label col-md-3 col-sm-3 ">Escoge un producto</label>
 											<div class="col-md-9 col-sm-9 ">
@@ -88,23 +93,24 @@
 										<div class="form-group row">
 											<label class="control-label col-md-3 col-sm-3 ">Precio</label>
 											<div class="col-md-9 col-sm-9 ">
-												<input type="text" class="form-control" disabled placeholder="Precio">
+												<input type="text" class="form-control" placeholder="Precio" v-model="precioSeleccionado">
 											</div>
+										</div>
+
+
+										<div class="form-group row">
+											<label class="control-label col-md-3 col-sm-3 ">Unidades</label>
+											<div class="col-md-9 col-sm-9 ">
+												<input type="number" name="cantidad" id="stock"  v-model="cantidad" class="form-control col-md-2" />
+											</div>
+                                            
 										</div>
 									
-										<div class="form-group row">
-											<label class="control-label col-md-3 col-sm-3 ">Descripcion<span class="required"></span>
-											</label>
-											<div class="col-md-9 col-sm-9 ">
-												<textarea class="form-control" rows="3" placeholder="Date Of Birth"></textarea>
-											</div>
-										</div>
-										
 										<div class="form-group row ">
 											<label class="control-label col-md-3 col-sm-3 ">Escoge un Cliente</label>
 											<div class="col-md-9 col-sm-9 ">
 												<select v-model="selecCliente" class="select2_single form-control" tabindex="-1">
-												  <option selected>selecionar</option>
+												  <option selected>Cliente no Registrado</option>
 												  <option v-for="itemCliente in listaclientes " :value="itemCliente.id_cliente">{{
 													itemCliente.nombre }}</option>
 												</select>
@@ -145,28 +151,30 @@
   export default {
 	data() {
 	  return {
-		id_producto: null,
-		nombre: "",
+		
+		//ventas
+		id_venta: null,
+		fecha_venta: "",
+		selecCliente:"",
+		selecFacturacion:"",
+		//detalleventa
+		id_detalle_venta: null,
+		selecProducto:"",
+		cantidad:"",
+		id_usuario:"",
 		precio_unitario: "",
-		precio_venta: "",
-		precio_compra: "",
-		descripcion: "",
-		stock: "",
-		stockmin: "",
-		selecMarca: "",
-		selecCategoria: "",
-		selecProcedencia: "",
-		selecProveedor: "",
-		listaproductos: [],
-	
+
+		// listas
+		listaventas: [],
+		listadetalle: [],
 		
 	  };
 	},
 	methods: {
 	  async iniciarCarga() {
 			try {
-			const response = await fetch("http://localhost:8081/v1/productos/");
-			this.listaproductos= this.listMenuItems = await response.json();   
+			const response = await fetch("http://localhost:8081/v1/ventas/");
+			this.listaventas= this.listaventas = await response.json();   
 			} catch (error) {
 			//console.log(error);
 			}
@@ -208,31 +216,57 @@
 		  //console.log(error);
 		}
 	  },
+
+	  async iniciarUsuarios() {
+		try {
+		  var urltmp = "http://localhost:8081/v1/usuarios/";
+		  const response = await fetch(urltmp);
+		  this.listaUsuarios = this.listaUsuarios = await response.json();
+		} catch (error) {
+		  //console.log(error);
+		}
+	  },
+
+	  async iniciarDetalle() {
+		try {
+		  var urltmp = "http://localhost:8081/v1/detalleventa/";
+		  const response = await fetch(urltmp);
+		  this.listadetalle = this.listadetalle = await response.json();
+		} catch (error) {
+		  //console.log(error);
+		}
+	  },
+	  mounted() {
+ 	 let fechaActual = new Date();
+  		let dia = ("0" + fechaActual.getDate()).slice(-2);
+  		let mes = ("0" + (fechaActual.getMonth() + 1)).slice(-2);
+  		let anio = fechaActual.getFullYear();
+  		this.fecha_venta = anio + "-" + mes + "-" + dia;
+	},
+
+
 	  guardardatos() {
 		var data = {
-		  nombre: this.nombre,
-		  descripcion: this.descripcion,
-		  precio_unitario: this.precio_unitario,
-		  precio_compra: this.precio_compra,
-		  precio_venta: this.precio_venta,
-		  stock: this.stock,
-		  stockmin: this.stockmin,
-		  peso: this.peso,
-		  id_marca: this.selecMarca,
-		  id_categoria: this.selecCategoria,
-		  id_proveedor: this.selecProveedor,
-		  id_procedencia: this.selecProcedencia,
+			//parte de ventas
+		  fecha_venta: this.fecha_venta,
+		  id_cliente: this.selecCliente,
+		  id_factu:this.selecFacturacion,
+			// detalle venta
+		  id_producto: this.selecProducto,
+		  cantidad: this.cantidad,
+		  precio_unitario:this.precio_unitario,
+		
 		};
 		var metodo = "POST";
   
-		console.log(this.id_producto)
+		console.log(this.id_venta)
   
-		if (this.id_producto != null || this.id_producto != "") {//guardar datos			
-		  data.id_producto = this.id_producto
+		if (this.id_venta != null || this.id_venta != "") {//guardar datos			
+		  data.id_venta = this.id_venta
 		  metodo = "PUT";
 		}
   
-		fetch("http://localhost:8081/v1/productos/", {
+		fetch("http://localhost:8081/v1/ventas/", {
 		  method: metodo, // or 'PUT'
 		  headers: { "Content-Type": "application/json", },
 		  body: JSON.stringify(data),
@@ -246,20 +280,20 @@
 		  });
 	  },
 	  editarProducto(datos) {
-		this.id_producto = datos.id_producto;
-		this.nombre = datos.nombre;
-		this.descripcion = datos.descripcion;
-		this.stock = datos.stock;
-		this.stockmin = datos.stockmin;
-		this.peso = datos.peso;
-		this.precio_compra = datos.precio_compra;
-		this.precio_venta = datos.precio_venta;
+
+		// edit venta
+
+		this.id_venta = datos.id_venta;
+		this.fecha_venta = datos.fecha_venta;
+		this.selecCliente = datos.selecCliente;
+		this.selecFacturacion = datos.selecFacturacion;
+		
+		//detalle venta
+		this.id_detalle_venta = datos.id_detalle_venta;
+		this.selecProducto = datos.selecProducto;
+		this.cantidad = datos.cantidad;
 		this.precio_unitario = datos.precio_unitario;
 		
-		this.selecCategoria = datos.selecCategoria;
-		this.selecMarca = datos.selecMarca;
-		this.selecProveedor = datos.selecProveedor;
-		this.selecProcedencia = datos.selecProcedencia;
 	  },
 	  nuevoregistro() {
 		this.mostrarformulario = true;
@@ -268,13 +302,13 @@
 	  cancelar() {
 		this.mostrarformulario = false;
 	  },
-	  async eliminarProducto(idtmp) {
+	  async eliminarVenta(idtmp) {
 			try{
-				const response = await fetch("http://localhost:8081/v1/productos/"+idtmp,{
+				const response = await fetch("http://localhost:8081/ventas/"+idtmp,{
 					method: "DELETE",
 				})
 				if(response.status==200){
-					this.id=null;
+					this.id_venta=null;
 					this.iniciarCarga();
 				}
 			}catch (error){
@@ -288,6 +322,7 @@
 	  this.iniciarProductos();
 	  this.iniciarClientes();
 	  this.iniciarFacturacion();
+	  this.iniciarDetalle();
 
 	},
   }

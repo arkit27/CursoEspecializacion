@@ -70,7 +70,8 @@
 								<div class="x_title">
 									<h2>Formulario Productos<small></small></h2>
 									<ul class="nav navbar-right panel_toolbox">
-										<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+										<li><a class="collapse-link">
+											<i class="fa fa-chevron-up"></i></a>
 										</li>
 										
 										<li><a class="close-link"><i class="fa fa-close"></i></a>
@@ -83,6 +84,7 @@
 									<form id="frmProducto" v-on:submit="guardardatos()" data-parsley-validate class="form-horizontal form-label-left">
 
 										<div class="form-group row ">
+											
 											<label class="control-label col-md-3 col-sm-3 ">Nombre el producto</label>
 											<input type="hidden" id="id_producto" name="id" v-model="id_producto" />
 											<div class="col-md-9 col-sm-9 ">

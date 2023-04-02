@@ -18,7 +18,7 @@ public class VentasEntity {
     @Column(name = "fecha_venta", nullable = false)
     private Date fecha_venta;
     @ManyToOne
-    @JoinColumn(name = "iddetalleventa")
-    private DetalleVentaEntity detalleventa;
+    @JoinColumn(name = "id_detalle_venta")
+    private DetalleVentaEntity id_detalle_venta;
 
 }

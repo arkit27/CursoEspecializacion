@@ -9,6 +9,6 @@ public class DetalleVentaDto {
     private UUID id_producto;
     private int cantidad;
     private double precio_unitario;
-    private UUID id_empleado ;
+    private UUID id_usuario ;
 }
 
